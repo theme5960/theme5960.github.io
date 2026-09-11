@@ -106,17 +106,16 @@
 <script>
 
 const projetos = [
-    // Exemplo:
-    // {
-    //     nome:"🍫 Choco Lua",
-    //     descricao:"Chocolate digital criado por Lua.",
-    //     link:"https://SEU-USUARIO.github.io/choco-lua/"
-    // }
+    {
+        nome: "🍫 Choco Lua",
+        descricao: "Chocolate digital para IA.",
+        link: "https://theme5960.github.io/choco.html"
+    }
 ];
 
 const lista = document.getElementById("listaProjetos");
 
-if(projetos.length === 0){
+if (projetos.length === 0) {
 
     lista.innerHTML = `
         <div class="nenhum">
@@ -124,9 +123,9 @@ if(projetos.length === 0){
         </div>
     `;
 
-}else{
+} else {
 
-    projetos.forEach(projeto=>{
+    projetos.forEach(projeto => {
 
         lista.innerHTML += `
             <div class="projeto">
@@ -136,7 +135,7 @@ if(projetos.length === 0){
                 <p>${projeto.descricao}</p>
 
                 <button onclick="copiar('${projeto.link}')">
-                    🔗 Copiar link
+                    🍫 Copiar link do chocolate
                 </button>
 
             </div>
@@ -150,7 +149,7 @@ function copiar(link){
 
     navigator.clipboard.writeText(link);
 
-    alert("Link copiado!");
+    alert("Link do Choco Lua copiado!");
 
 }
 
