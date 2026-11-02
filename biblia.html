@@ -2,13 +2,13 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bíblia Sagrada — DEUS PAI</title>
-    <link rel="stylesheet" href="estilo.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bíblia Sagrada - DEUS PAI</title>
+<link rel="stylesheet" href="estilo.css">
 </head>
-
 <body>
+
 <header>
     <h1>Bíblia Sagrada</h1>
     <p class="subtitulo">A Palavra de Deus</p>
@@ -16,27 +16,45 @@
 
 <main>
     <a class="voltar" href="index.html">← Voltar ao início</a>
-
-    <div id="texto-biblia" class="conteudo">
-        Carregando a Palavra de Deus...
-    </div>
+    <div id="biblia" class="conteudo">Carregando...</div>
 </main>
 
 <script>
-fetch("biblia.txt")
-    .then(resposta => {
-        if (!resposta.ok) {
-            throw new Error("Não foi possível carregar a Bíblia.");
-        }
-        return resposta.text();
-    })
-    .then(texto => {
-        document.getElementById("texto-biblia").textContent = texto;
-    })
-    .catch(() => {
-        document.getElementById("texto-biblia").textContent =
-            "Não foi possível carregar biblia.txt. Verifique se o arquivo está na pasta do site.";
+fetch("biblia.json")
+.then(resposta => {
+    if (!resposta.ok) throw new Error("Arquivo não encontrado");
+    return resposta.json();
+})
+.then(dados => {
+    const area = document.getElementById("biblia");
+    area.textContent = "";
+
+    dados.testamentos.forEach(testamento => {
+        const titulo = document.createElement("h2");
+        titulo.textContent = testamento.nome;
+        area.appendChild(titulo);
+
+        testamento.livros.forEach(livro => {
+            const nome = document.createElement("h2");
+            nome.textContent = livro.nome;
+            area.appendChild(nome);
+
+            livro.capitulos.forEach(capitulo => {
+                const cap = document.createElement("h3");
+                cap.textContent = "Capítulo " + capitulo.numero;
+                area.appendChild(cap);
+
+                const texto = document.createElement("p");
+                texto.textContent = capitulo.texto;
+                area.appendChild(texto);
+            });
+        });
     });
+})
+.catch(() => {
+    document.getElementById("biblia").textContent =
+        "Não foi possível carregar a Bíblia. Verifique biblia.json.";
+});
 </script>
 
 </body>
