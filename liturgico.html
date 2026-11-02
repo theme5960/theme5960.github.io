@@ -1,0 +1,160 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tempo Litúrgico — DEUS PAI</title>
+    <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+<header>
+    <h1>Tempo Litúrgico</h1>
+    <p class="subtitulo">Vivendo o calendário da Igreja</p>
+</header>
+
+<main>
+    <a class="voltar" href="index.html">← Voltar ao início</a>
+
+    <div style="text-align:center; padding:25px 5px">
+        <h2 id="nome-tempo" style="color:#e8c783"></h2>
+        <p id="descricao" class="conteudo"></p>
+        <p id="data"></p>
+        <p id="ano-liturgico"></p>
+    </div>
+</main>
+
+<footer>DEUS PAI · Calendário litúrgico</footer>
+
+<script>
+// Retorna uma data sem horário, no calendário local.
+function dataLocal(ano, mes, dia) {
+    return new Date(ano, mes - 1, dia, 12);
+}
+
+function adicionarDias(data, quantidade) {
+    const nova = new Date(data);
+    nova.setDate(nova.getDate() + quantidade);
+    return nova;
+}
+
+// Calcula a data da Páscoa pelo calendário gregoriano.
+function calcularPascoa(ano) {
+    const a = ano % 19;
+    const b = Math.floor(ano / 100);
+    const c = ano % 100;
+    const d = Math.floor(b / 4);
+    const e = b % 4;
+    const f = Math.floor((b + 8) / 25);
+    const g = Math.floor((b - f + 1) / 3);
+    const h = (19 * a + b - d - g + 15) % 30;
+    const i = Math.floor(c / 4);
+    const k = c % 4;
+    const l = (32 + 2 * e + 2 * i - h - k) % 7;
+    const m = Math.floor((a + 11 * h + 22 * l) / 451);
+    const mes = Math.floor((h + l - 7 * m + 114) / 31);
+    const dia = ((h + l - 7 * m + 114) % 31) + 1;
+
+    return dataLocal(ano, mes, dia);
+}
+
+// Primeiro domingo do Advento: quatro domingos antes do Natal.
+function inicioAdvento(ano) {
+    const natal = dataLocal(ano, 12, 25);
+    const domingo = new Date(natal);
+
+    while (domingo.getDay() !== 0) {
+        domingo.setDate(domingo.getDate() - 1);
+    }
+
+    return adicionarDias(domingo, -21);
+}
+
+// Batismo do Senhor: domingo depois da Epifania (6 de janeiro).
+function batismoSenhor(ano) {
+    const data = dataLocal(ano, 1, 7);
+
+    while (data.getDay() !== 0) {
+        data.setDate(data.getDate() + 1);
+    }
+
+    return data;
+}
+
+function mesmoDia(a, b) {
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth() === b.getMonth() &&
+           a.getDate() === b.getDate();
+}
+
+function identificarTempo(hoje) {
+    const ano = hoje.getFullYear();
+
+    // Datas da Páscoa do ano atual.
+    const pascoa = calcularPascoa(ano);
+    const cinzas = adicionarDias(pascoa, -46);
+    const domingoRamos = adicionarDias(pascoa, -7);
+    const quintaSanta = adicionarDias(pascoa, -3);
+    const sabadoSanto = adicionarDias(pascoa, -1);
+    const pentecostes = adicionarDias(pascoa, 49);
+
+    // Advento do ano anterior e do ano atual.
+    const adventoAnterior = inicioAdvento(ano - 1);
+    const adventoAtual = inicioAdvento(ano);
+
+    const natalAnterior = dataLocal(ano - 1, 12, 25);
+    const batismoAtual = batismoSenhor(ano);
+
+    let nome = "";
+    let descricao = "";
+
+    if (hoje >= adventoAtual) {
+        nome = "Tempo do Advento";
+        descricao = "Tempo de preparação e esperança para a chegada de Jesus Cristo.";
+    } else if (hoje >= dataLocal(ano, 12, 25)) {
+        nome = "Tempo do Natal";
+        descricao = "Celebramos o nascimento de Nosso Senhor Jesus Cristo.";
+    } else if (hoje >= natalAnterior && hoje <= batismoAtual) {
+        nome = "Tempo do Natal";
+        descricao = "Celebramos o nascimento de Nosso Senhor Jesus Cristo.";
+    } else if (hoje >= quintaSanta && hoje <= sabadoSanto) {
+        nome = "Tríduo Pascal";
+        descricao = "Vivemos a Paixão, a morte e a sepultura de Jesus.";
+    } else if (hoje >= pascoa && hoje <= pentecostes) {
+        nome = "Tempo Pascal";
+        descricao = "Celebramos a Ressurreição de Jesus Cristo e aguardamos Pentecostes.";
+    } else if (hoje >= cinzas && hoje < quintaSanta) {
+        nome = "Tempo da Quaresma";
+        descricao = "Tempo de oração, penitência e preparação para a Páscoa.";
+    } else {
+        nome = "Tempo Comum";
+        descricao = "Tempo de crescer na fé e viver os ensinamentos de Jesus no cotidiano.";
+    }
+
+    // Ajusta o nome do período de Natal no final de dezembro.
+    if (hoje >= dataLocal(ano, 12, 25)) {
+        nome = "Tempo do Natal";
+        descricao = "Celebramos o nascimento de Nosso Senhor Jesus Cristo.";
+    }
+
+    return { nome, descricao };
+}
+
+const hoje = new Date();
+const resultado = identificarTempo(hoje);
+
+document.getElementById("nome-tempo").textContent = resultado.nome;
+document.getElementById("descricao").textContent = resultado.descricao;
+
+document.getElementById("data").textContent =
+    "Hoje: " + hoje.toLocaleDateString("pt-BR", {
+        day: "numeric",
+        month: "long",
+        year: "numeric"
+    });
+
+document.getElementById("ano-liturgico").textContent =
+    "Ano civil: " + hoje.getFullYear();
+</script>
+</body>
+</html>
