@@ -1,137 +1,76 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bíblia Sagrada - Ave Maria</title>
-    <!-- Vincula o seu arquivo de estilo existente -->
-    <link rel="stylesheet" href="estilo.css"> 
-    <style>
-        /* Estilos básicos para a interface da Bíblia */
-        .biblia-container { max-width: 800px; margin: 20px auto; padding: 20px; font-family: sans-serif; }
-        .controles { display: flex; gap: 10px; margin-bottom: 20px; }
-        select { padding: 8px; font-size: 16px; border-radius: 4px; }
-        .versiculo { margin-bottom: 10px; line-height: 1.6; }
-        .num-ver { font-weight: bold; margin-right: 5px; color: #888; display: inline-block; width: 20px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bíblia Sagrada - DEUS PAI</title>
+<link rel="stylesheet" href="estilo.css">
 </head>
 <body>
 
-    <div class="biblia-container">
-        <h1>Bíblia Sagrada</h1>
-        
-        <!-- Seletores de Livro e Capítulo -->
-        <div class="controles">
-            <select id="select-livro">
-                <option value="">Selecione o Livro</option>
-            </select>
-            
-            <select id="select-capitulo" disabled>
-                <option value="">Capítulo</option>
-            </select>
-        </div>
+<header>
+    <h1>Bíblia Sagrada</h1>
+    <p class="subtitulo">A Palavra de Deus</p>
+</header>
 
-        <!-- Área onde o texto bíblico vai aparecer -->
-        <div id="texto-biblico">
-            <p>Selecione um livro e um capítulo para começar a leitura.</p>
-        </div>
-    </div>
+<main>
+    <a class="voltar" href="index.html">← Voltar ao início</a>
+    <div id="biblia" class="conteudo">Carregando...</div>
+</main>
 
-    <script>
-        // Variável global para armazenar os dados da Bíblia após o carregamento
-        let dadosBiblia = null;
+<script>
+const area = document.getElementById("biblia");
 
-        const selectLivro = document.getElementById('select-livro');
-        const selectCapitulo = document.getElementById('select-capitulo');
-        const txtBiblico = document.getElementById('texto-biblico');
+fetch("./biblia.json")
+    .then(resposta => {
+        if (!resposta.ok) {
+            throw new Error(`Não foi possível abrir biblia.json (${resposta.status})`);
+        }
+        return resposta.json();
+    })
+    .then(dados => {
+        const testamentos = [
+            { nome: "Antigo Testamento", livros: dados.antigoTestamento },
+            { nome: "Novo Testamento", livros: dados.novoTestamento }
+        ];
 
-        // 1. Carrega o arquivo biblia.json que está na mesma pasta
-        fetch('biblia.json')
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Erro ao carregar o arquivo JSON da Bíblia.');
-                }
-                return response.json();
-            })
-            .then(data => {
-                dadosBiblia = data;
-                popularLivros();
-            })
-            .catch(error => {
-                txtBiblico.innerHTML = `<p style="color:red;">Erro: ${error.message}. Certifique-se de que está rodando em um servidor local.</p>`;
-            });
-
-        // 2. Preenche o primeiro select com os livros encontrados no JSON
-        function popularLivros() {
-            // Nota: Dependendo da estrutura exata do seu JSON (Array ou Objeto), 
-            // ajustamos como pegamos as chaves ou índices.
-            const livros = Object.keys(dadosBiblia); 
-            
-            livros.forEach(livro => {
-                const option = document.createElement('option');
-                option.value = livro;
-                option.textContent = livro;
-                selectLivro.appendChild(option);
-            });
+        if (testamentos.some(testamento => !Array.isArray(testamento.livros))) {
+            throw new Error("Formato inesperado em biblia.json");
         }
 
-        // 3. Escuta quando o usuário escolhe um livro e popula os capítulos
-        selectLivro.addEventListener('change', (e) => {
-            const livroSelecionado = e.target.value;
-            selectCapitulo.innerHTML = '<option value="">Capítulo</option>';
-            txtBiblico.innerHTML = '<p>Selecione o capítulo.</p>';
-            
-            if (!livroSelecionado) {
-                selectCapitulo.disabled = true;
-                return;
-            }
+        area.textContent = "";
 
-            const capitulos = dadosBiblia[livroSelecionado];
-            // Verifica o tamanho do array ou chaves do objeto de capítulos
-            const totalCapitulos = Object.keys(capitulos).length;
+        testamentos.forEach(testamento => {
+            const titulo = document.createElement("h2");
+            titulo.textContent = testamento.nome;
+            area.appendChild(titulo);
 
-            for (let i = 1; i <= totalCapitulos; i++) {
-                const option = document.createElement('option');
-                option.value = i;
-                option.textContent = i;
-                selectCapitulo.appendChild(option);
-            }
-            selectCapitulo.disabled = false;
-        });
+            testamento.livros.forEach(livro => {
+                const nome = document.createElement("h2");
+                nome.textContent = livro.nome;
+                area.appendChild(nome);
 
-        // 4. Escuta quando o usuário escolhe o capítulo e renderiza os versículos
-        selectCapitulo.addEventListener('change', (e) => {
-            const livro = selectLivro.value;
-            const capitulo = e.target.value;
+                livro.capitulos.forEach(capitulo => {
+                    const cap = document.createElement("h3");
+                    cap.textContent = "Capítulo " + capitulo.capitulo;
+                    area.appendChild(cap);
 
-            if (!livro || !capitulo) return;
-
-            // Busca os versículos do capítulo selecionado
-            // Dependendo se seu JSON começa do 0 ou do 1 na indexação:
-            const versiculos = dadosBiblia[livro][capitulo] || dadosBiblia[livro][capitulo - 1]; 
-
-            txtBiblico.innerHTML = ''; // Limpa a tela
-
-            if (Array.isArray(versiculos)) {
-                // Se for um array de strings
-                versiculos.forEach((texto, index) => {
-                    const p = document.createElement('p');
-                    p.className = 'versiculo';
-                    p.innerHTML = `<span class="num-ver">${index + 1}</span>${texto}`;
-                    txtBiblico.appendChild(p);
+                    const texto = document.createElement("p");
+                    texto.textContent = capitulo.versiculos
+                        .map(versiculo => `${versiculo.versiculo} ${versiculo.texto}`)
+                        .join("\n");
+                    area.appendChild(texto);
                 });
-            } else if (typeof versiculos === 'object') {
-                // Se for um objeto com chaves numéricas {"1": "No princípio...", "2": ...}
-                Object.keys(versiculos).forEach(num => {
-                    const p = document.createElement('p');
-                    p.className = 'versiculo';
-                    p.innerHTML = `<span class="num-ver">${num}</span>${versiculos[num]}`;
-                    txtBiblico.appendChild(p);
-                });
-            } else {
-                txtBiblico.innerHTML = '<p>Não foi possível carregar os versículos deste capítulo.</p>';
-            }
+            });
         });
-    </script>
+    })
+    .catch(erro => {
+        console.error("Erro ao carregar a Bíblia:", erro);
+        area.textContent =
+            "Não foi possível carregar a Bíblia. Verifique se biblia.json está na mesma pasta desta página.";
+    });
+</script>
+
 </body>
 </html>
