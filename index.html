@@ -1,0 +1,151 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deus Pai | Evangelização Católica</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Crimson Text', serif;
+            background:
+                linear-gradient(rgba(25, 16, 10, 0.72),
+                rgba(25, 16, 10, 0.85)),
+                url("https://images.unsplash.com/photo-1548013146-72479768bada?w=1920");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            color: #fff3dc;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            padding: 65px 15px 35px;
+        }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(28px, 6vw, 48px);
+            color: #e8c47c;
+            text-shadow: 2px 3px 8px #000;
+        }
+
+        header p {
+            font-size: 20px;
+            margin-top: 15px;
+            color: #f5e4c5;
+        }
+
+        .linha {
+            width: 130px;
+            height: 2px;
+            background: #c9a45e;
+            margin: 25px auto;
+        }
+
+        main {
+            max-width: 750px;
+            margin: auto;
+            padding: 15px 20px 50px;
+        }
+
+        .botoes {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 17px;
+        }
+
+        .botao {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 85px;
+            padding: 15px;
+            text-decoration: none;
+            color: #fce8bf;
+            background: rgba(92, 58, 31, 0.85);
+            border: 1px solid #c9a45e;
+            border-radius: 8px;
+            font-family: 'Cinzel', serif;
+            font-size: 15px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .botao:hover {
+            background: #b18a4d;
+            color: #26180e;
+            transform: translateY(-4px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 15px;
+            color: #e8c47c;
+            font-size: 17px;
+        }
+
+        @media (max-width: 450px) {
+            .botoes {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>BOAS VINDAS AO DEUS PAI</h1>
+        <div class="linha"></div>
+        <p>Conheça a Palavra de Deus e viva a sua fé.</p>
+    </header>
+
+    <main>
+        <section class="botoes">
+
+            <a class="botao" href="https://www.vatican.va/archive/bible/genesis/documents/bible_genesis_po.html" target="_blank" rel="noopener">
+                📜 ANTIGO TESTAMENTO
+            </a>
+
+            <a class="botao" href="https://www.vatican.va/archive/bible/nt/documents/bible_nt_po.html" target="_blank" rel="noopener">
+                📖 NOVO TESTAMENTO
+            </a>
+
+            <a class="botao" href="https://www.vatican.va/archive/bible/nova_vulgata/documents/nova-vulgata_index_lt.html" target="_blank" rel="noopener">
+                ✝ EVANGELHOS
+            </a>
+
+            <a class="botao" href="https://www.vatican.va/" target="_blank" rel="noopener">
+                ✨ MILAGRES
+            </a>
+
+            <a class="botao" href="https://www.youtube.com/results?search_query=musicas+catolicas+frei+gilson" target="_blank" rel="noopener">
+                🎵 MÚSICAS
+            </a>
+
+            <a class="botao" href="calendario.html">
+                🕊 TEMPO LITÚRGICO
+            </a>
+
+        </section>
+    </main>
+
+    <footer>
+        <div class="linha"></div>
+        <p>DEUS É AMOR</p>
+        <p>Que Jesus ilumine o seu caminho.</p>
+    </footer>
+
+</body>
+</html>
