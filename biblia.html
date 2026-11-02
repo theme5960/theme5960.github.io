@@ -7,6 +7,7 @@
     <title>Bíblia Sagrada — DEUS PAI</title>
     <link rel="stylesheet" href="estilo.css">
 </head>
+
 <body>
 <header>
     <h1>Bíblia Sagrada</h1>
@@ -16,13 +17,27 @@
 <main>
     <a class="voltar" href="index.html">← Voltar ao início</a>
 
-    <div class="conteudo">
-        <!deu pai todo poderoso>
-
-        <h2>biblia</h2>
-        
-        <!-- CONTINUE COM OS LIVROS DA BÍBLIA -->
+    <div id="texto-biblia" class="conteudo">
+        Carregando a Palavra de Deus...
     </div>
 </main>
+
+<script>
+fetch("biblia.txt")
+    .then(resposta => {
+        if (!resposta.ok) {
+            throw new Error("Não foi possível carregar a Bíblia.");
+        }
+        return resposta.text();
+    })
+    .then(texto => {
+        document.getElementById("texto-biblia").textContent = texto;
+    })
+    .catch(() => {
+        document.getElementById("texto-biblia").textContent =
+            "Não foi possível carregar biblia.txt. Verifique se o arquivo está na pasta do site.";
+    });
+</script>
+
 </body>
 </html>
