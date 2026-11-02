@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deus Pai | Evangelização Católica</title>
+    <meta name="theme-color" content="#382317">
+
+    <title>DEUS PAI | Evangelização Católica</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
@@ -15,89 +17,152 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Crimson Text', serif;
-            background:
-                linear-gradient(rgba(25, 16, 10, 0.72),
-                rgba(25, 16, 10, 0.85)),
-                url("https://images.unsplash.com/photo-1548013146-72479768bada?w=1920");
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            color: #fff3dc;
-            min-height: 100vh;
+        html {
+            scroll-behavior: smooth;
         }
 
-        header {
+        body {
+            font-family: 'Crimson Text', serif;
+            color: #fff3dc;
+            background: #24170f;
+        }
+
+        .hero {
+            min-height: 100vh;
+            background:
+                linear-gradient(
+                    rgba(24, 15, 9, 0.55),
+                    rgba(24, 15, 9, 0.88)
+                ),
+                url("https://images.unsplash.com/photo-1548013146-72479768bada?w=1920")
+                center/cover no-repeat;
+            background-attachment: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 35px 20px;
             text-align: center;
-            padding: 65px 15px 35px;
         }
 
         header h1 {
             font-family: 'Cinzel', serif;
-            font-size: clamp(28px, 6vw, 48px);
             color: #e8c47c;
-            text-shadow: 2px 3px 8px #000;
+            font-size: clamp(30px, 6vw, 52px);
+            text-shadow: 2px 3px 10px #000;
         }
 
         header p {
-            font-size: 20px;
+            font-size: 21px;
             margin-top: 15px;
             color: #f5e4c5;
         }
 
-        .linha {
+        .ornamento {
             width: 130px;
             height: 2px;
             background: #c9a45e;
             margin: 25px auto;
         }
 
-        main {
-            max-width: 750px;
-            margin: auto;
-            padding: 15px 20px 50px;
-        }
-
         .botoes {
+            width: 100%;
+            max-width: 760px;
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 17px;
+            gap: 16px;
+            margin-top: 30px;
         }
 
         .botao {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             min-height: 85px;
-            padding: 15px;
-            text-decoration: none;
-            color: #fce8bf;
-            background: rgba(92, 58, 31, 0.85);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 18px;
+            background: rgba(92, 58, 31, 0.88);
             border: 1px solid #c9a45e;
             border-radius: 8px;
+            color: #fce8bf;
             font-family: 'Cinzel', serif;
             font-size: 15px;
-            text-align: center;
+            text-decoration: none;
             transition: 0.3s;
+            cursor: pointer;
         }
 
         .botao:hover {
-            background: #b18a4d;
+            background: #c19a58;
             color: #26180e;
             transform: translateY(-4px);
         }
 
-        footer {
+        .conteudo {
+            background: #f1e5d2;
+            color: #493321;
+            padding: 65px 20px;
             text-align: center;
-            padding: 30px 15px;
-            color: #e8c47c;
-            font-size: 17px;
         }
 
-        @media (max-width: 450px) {
+        .conteudo h2 {
+            font-family: 'Cinzel', serif;
+            color: #79552f;
+            font-size: 29px;
+            margin-bottom: 20px;
+        }
+
+        .conteudo p {
+            font-size: 19px;
+            line-height: 1.7;
+            max-width: 700px;
+            margin: 10px auto;
+        }
+
+        .tempos {
+            max-width: 700px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .tempo {
+            padding: 18px;
+            background: #e3d1b5;
+            border: 1px solid #b18a4d;
+            border-radius: 8px;
+            font-size: 18px;
+        }
+
+        .calendario-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 14px 25px;
+            background: #65452b;
+            color: white;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        footer {
+            background: #24170f;
+            color: #e8c47c;
+            padding: 35px 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        @media (max-width: 500px) {
             .botoes {
                 grid-template-columns: 1fr;
+            }
+
+            .tempos {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                background-attachment: scroll;
             }
         }
     </style>
@@ -105,46 +170,114 @@
 
 <body>
 
-    <header>
-        <h1>BOAS VINDAS AO DEUS PAI</h1>
-        <div class="linha"></div>
-        <p>Conheça a Palavra de Deus e viva a sua fé.</p>
-    </header>
+    <section class="hero">
 
-    <main>
-        <section class="botoes">
+        <header>
+            <h1>BOAS VINDAS AO DEUS PAI</h1>
 
-            <a class="botao" href="https://www.vatican.va/archive/bible/genesis/documents/bible_genesis_po.html" target="_blank" rel="noopener">
-                📜 ANTIGO TESTAMENTO
+            <div class="ornamento"></div>
+
+            <p>Conheça a Palavra de Deus e viva a sua fé.</p>
+        </header>
+
+        <nav class="botoes">
+
+            <!-- BÍBLIA -->
+            <a class="botao"
+               href="https://www.bibliacatolica.com.br/pt/"
+               target="_blank"
+               rel="noopener">
+                📖 BÍBLIA SAGRADA
             </a>
 
-            <a class="botao" href="https://www.vatican.va/archive/bible/nt/documents/bible_nt_po.html" target="_blank" rel="noopener">
-                📖 NOVO TESTAMENTO
-            </a>
-
-            <a class="botao" href="https://www.vatican.va/archive/bible/nova_vulgata/documents/nova-vulgata_index_lt.html" target="_blank" rel="noopener">
-                ✝ EVANGELHOS
-            </a>
-
-            <a class="botao" href="https://www.vatican.va/" target="_blank" rel="noopener">
+            <!-- MILAGRES -->
+            <a class="botao"
+               href="https://www.miracolieucaristici.org/pr/Liste/list.html"
+               target="_blank"
+               rel="noopener">
                 ✨ MILAGRES
             </a>
 
-            <a class="botao" href="https://www.youtube.com/results?search_query=musicas+catolicas+frei+gilson" target="_blank" rel="noopener">
+            <!-- MÚSICAS -->
+            <a class="botao"
+               href="https://www.youtube.com/results?search_query=musicas+catolicas+frei+gilson"
+               target="_blank"
+               rel="noopener">
                 🎵 MÚSICAS
             </a>
 
-            <a class="botao" href="calendario.html">
-                🕊 TEMPO LITÚRGICO
+            <!-- TEMPO LITÚRGICO -->
+            <a class="botao" href="#tempo-liturgico">
+                🕊️ TEMPO LITÚRGICO
             </a>
 
-        </section>
-    </main>
+            <!-- EVANGELHOS -->
+            <a class="botao"
+               href="https://www.bibliacatolica.com.br/pt/"
+               target="_blank"
+               rel="noopener">
+                ✝️ EVANGELHOS
+            </a>
+
+        </nav>
+
+    </section>
+
+    <!-- CALENDÁRIO LITÚRGICO -->
+
+    <section class="conteudo" id="tempo-liturgico">
+
+        <h2>Tempo Litúrgico</h2>
+
+        <div class="ornamento"></div>
+
+        <p>
+            Conheça os tempos litúrgicos da Igreja Católica
+            e acompanhe o caminho da fé durante o ano.
+        </p>
+
+        <div class="tempos">
+
+            <div class="tempo">🟣 Advento</div>
+
+            <div class="tempo">⚪ Natal</div>
+
+            <div class="tempo">🟢 Tempo Comum</div>
+
+            <div class="tempo">🟣 Quaresma</div>
+
+            <div class="tempo">🔴 Domingo de Ramos e Paixão</div>
+
+            <div class="tempo">⚪ Tríduo Pascal</div>
+
+            <div class="tempo">⚪ Tempo Pascal</div>
+
+        </div>
+
+        <p>
+            O ano litúrgico celebra a vida, a morte
+            e a ressurreição de Jesus Cristo.
+        </p>
+
+        <a class="calendario-link"
+           href="https://press.vatican.va/content/leo-xiv/pt/events/year.dir.html/2026.html"
+           target="_blank"
+           rel="noopener">
+            CONSULTAR CALENDÁRIO DO VATICANO
+        </a>
+
+    </section>
 
     <footer>
-        <div class="linha"></div>
+
+        <div class="ornamento"></div>
+
         <p>DEUS É AMOR</p>
+
         <p>Que Jesus ilumine o seu caminho.</p>
+
+        <p>DEUS PAI © 2026</p>
+
     </footer>
 
 </body>
